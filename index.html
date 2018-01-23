@@ -1,0 +1,172 @@
+<html>
+	<head>
+		<title>Kintargo</title>
+		<link rel="stylesheet" type="text/css" href="https://rawgit.com/etienne-martin/Mapify/master/build/jquery.mapify.css">	
+		<style type="text/css">
+			.mapify-hover{
+				fill:rgba(0,0,128,0.25);
+				stroke: rgba(0,0,128,0.85);
+				stroke-width: 2;
+			}
+
+			.mapify-hover.district{
+				fill:rgba(0,128,0,0.25);
+				stroke: rgba(0,128,0,0.85);
+				stroke-width: 2;
+			}
+
+			.mapify-popOver strong{
+				font-weight: 400;
+				font-size:18px;
+				line-height: 1em;
+				display: block;
+				margin-bottom: 10px;
+				color: #000;
+			}
+			.mapify-popOver{
+				color: #666;
+				font-size: 14px;
+				height: 90px;
+			}
+			.mapify-popOver-content{
+				position: relative;
+				top:50%;
+				transform: translateY(-50%);
+				-webkit-transform: translateY(-50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div> 
+			<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" />
+		</div>
+		<div id="mapContainer">
+			<map name="kintargoMap" id="kintargoMap"></map>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="mapify.js"></script>
+		<script type="text/javascript">
+			function getCurrentTags() {
+				var url = window.location.href;
+				var urlParts = url.split('?');
+
+				if(urlParts.length == 1) {
+					return [];
+				}
+
+				var queryString = urlParts[1];
+
+				var parameters = queryString.split('&');
+
+
+				var result = [];
+				for(var i = 0; i < parameters.length; i++) {
+					if(parameters[i].indexOf('=') == -1) {
+						continue;
+					}
+
+					result.push(parameters[i].split('=')[1]);
+				}
+
+				return result;
+			}
+
+			function initMap(currentTags) {
+				console.log("initialising map with filters: " + currentTags);
+				initMapData(currentTags);
+				initMapify();
+			}
+
+			function initMapData(currentTags) {
+				var map = $('#kintargoMap');
+				map.empty();
+
+				for(var i = 0; i < mapData.length; i++) {
+					var mapItem = mapData[i];
+					if(isVisible(currentTags, mapItem.tags)) {
+						var mapElement = $('<area data-title="' + mapItem.title + 
+							'" data-description="' + mapItem.description + 
+							'" shape="' + mapItem.shape.type + 
+							'" coords="' + mapItem.shape.coordinates + 
+							'" data-hover-class="' + mapItem.type +
+							'" id="mapArea' + i + '" />');
+						map.append(mapElement);
+					}
+				}
+			}
+
+			function isVisible(currentTags, objectTags) {
+				for(var i = 0; i < currentTags.length; i++) {
+					if($.inArray(currentTags[i], objectTags) == -1) {
+						return false;
+					}
+
+				}
+
+				return true;
+			}
+
+			function initMapify() {
+				$("img[usemap]").mapify({
+					popOver: {
+						content: function(zone){ 
+							return "<strong>"+zone.attr("data-title")+"</strong>"+zone.attr("data-description");
+						},
+						delay: 0.7,
+						margin: "15px",
+						height: "90px",
+						width: "240px"
+					}
+				});
+			}
+
+			var mapData = [
+				{
+					"title":"Blue Orchid Social Club",
+					"description":"Blue Orchid Social Club",
+					"tags":["greens", "business", "inn", "player1"],
+					"type":"location",
+					"shape": {
+						"type":"poly",
+						"coordinates":[890,395,904,389,916,417,901,425]
+					}
+				},
+				{
+					"title":"Alabaster Academy",
+					"description":"Alabaster Academy",
+					"tags":["villegre", "business", "school", "player2"],
+					"type":"location",
+					"shape": {
+						"type":"poly",
+						"coordinates":[482,295,457,331,501,367,529,324]
+					}
+				},
+				{
+					"title":"Villegre",
+					"description":"Scholastic district",
+					"tags":["villegre", "player1", "player2"],
+					"type":"district",
+					"shape": {
+						"type":"poly",
+						"coordinates":[357,327,438,355,448,366,462,391,498,424,512,403,569,407,606,430,626,400,623,374,598,328,661,310,608,168,553,175,523,218,434,211,357,177,284,203,242,246,246,352]
+					}
+				},
+				{
+					"title":"The Greens",
+					"description":"Noble district",
+					"tags":["greens", "player1"],
+					"type":"district",
+					"shape": {
+						"type":"poly",
+						"coordinates":[616,166,682,346,683,422,704,471,804,523,895,535,939,490,948,435,923,376,897,331,731,169,645,139]
+					}
+				}
+			];
+
+			var currentTags = getCurrentTags();
+
+			initMap(currentTags);
+		</script>
+	</body>
+</html>
