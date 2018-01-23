@@ -1,535 +1,59 @@
-<html>
-	<head>
-		<title>Kintargo</title>
-		<link rel="stylesheet" type="text/css" href="https://rawgit.com/etienne-martin/Mapify/master/build/jquery.mapify.css">	
-		<style type="text/css">
-			.mapify-hover{
-				fill:rgba(0,0,128,0.25);
-				stroke: rgba(0,0,128,0.85);
-				stroke-width: 2;
-			}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-			.mapify-hover.district{
-				fill:rgba(0,128,0,0.25);
-				stroke: rgba(0,128,0,0.85);
-				stroke-width: 2;
-			}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+    	body {
+    		background: url('https://cdna.artstation.com/p/assets/images/images/001/174/878/large/shen-fei-kintargo-skyline.jpg') no-repeat center center fixed;
+	        background-size:100%;
+    	}
 
-			.mapify-hover.event{
-				fill:rgba(128,0,0,0.25);
-				stroke: rgba(128,0,0,0.85);
-				stroke-width: 2;
-			}
+    	.entry {
+    		background: rgba(255,255,255,0.5);
+    		text-align: center;
+    		padding: 10px;
+    	}
 
-			.mapify-popOver strong{
-				font-weight: 400;
-				font-size:18px;
-				line-height: 1em;
-				display: block;
-				margin-bottom: 10px;
-				color: #000;
-			}
-			.mapify-popOver{
-				color: #666;
-				font-size: 14px;
-				height: 90px;
-			}
-			.mapLabel {
-				display: table;
-				font-weight: 600;
-				height: 20px;
-				position: absolute;
-            	font-size: 16;
-            	opacity: 1;
-            	transition: none;
-            	background: rgba(255,255,255,0.85);
-            	stroke: rgba(0,0,0,0.5);
-				stroke-width: 2;
-				padding: 5px;
-				transform: translate(-50%, -30px);
-			}
-			.mapLabel.district {
-				transform: translate(-50%, +50%);
-			}
-			.mapify-popOver-content{
-				position: relative;
-				top:50%;
-				transform: translateY(-50%);
-				-webkit-transform: translateY(-50%);
-			}
-		</style>
-	</head>
-	<body>
-		<div> 
-			<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" />
+    	a {
+    		color: #990000;
+    	}
+
+    	.spacer {
+    		height: 300px;
+    	}
+    </style>
+    <title>Kintargo</title>
+  </head>
+  <body>
+  	<div class="container">
+  		<div class="row spacer">
+  		</div>
+	  	<div class="row">
+			<div class="col-sm">
+				<h1 class="entry"><a href="map.html?player=zero">Zero</a></h1>
+			</div>
+			<div class="col-sm">
+				<h1 class="entry"><a href="map.html?player=Dolores">Dolores</a></h1>
+			</div>
+			<div class="col-sm">
+				<h1 class="entry"><a href="map.html?player=Majet">Majet</a></h1>
+			</div>
+			<div class="col-sm">
+				<h1 class="entry"><a href="map.html?player=Fistandantilus">Fistandantilus</a></h1>
+			</div>
 		</div>
-		<div id="mapContainer">
-			<map name="kintargoMap" id="kintargoMap"></map>
-		</div>
+	</div>
+    
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="mapify.js"></script>
-		<script type="text/javascript">
-			function getCurrentTags() {
-				var url = window.location.href;
-				var urlParts = url.split('?');
-
-				if(urlParts.length == 1) {
-					return [];
-				}
-
-				var queryString = urlParts[1];
-
-				var parameters = queryString.split('&');
-
-
-				var result = [];
-				for(var i = 0; i < parameters.length; i++) {
-					if(parameters[i].indexOf('=') == -1) {
-						continue;
-					}
-
-					result.push(parameters[i].split('=')[1]);
-				}
-
-				return result;
-			}
-
-			function initMap(currentTags) {
-				console.log("initialising map with filters: " + currentTags);
-				initMapData(currentTags);
-				initMapify();
-			}
-
-			function initMapData(currentTags) {
-				var map = $('#kintargoMap');
-				map.empty();
-
-				for(var i = 0; i < mapData.length; i++) {
-					var mapItem = mapData[i];
-					if(isVisible(currentTags, mapItem.tags)) {
-						var mapElement = $('<area data-title="' + mapItem.title + 
-							'" data-description="' + mapItem.description + 
-							'" shape="' + mapItem.shape.type + 
-							'" coords="' + mapItem.shape.coordinates + 
-							'" data-hover-class="' + mapItem.type +
-							'" id="mapArea' + i + '" />');
-						map.append(mapElement);
-					}
-				}
-			}
-
-			function isVisible(currentTags, objectTags) {
-				for(var i = 0; i < currentTags.length; i++) {
-					if($.inArray(currentTags[i], objectTags) == -1) {
-						return false;
-					}
-
-				}
-
-				return true;
-			}
-
-			function initMapify() {
-				$("img[usemap]").mapify({
-					popOver: {
-						content: function(zone){ 
-							return "<strong>"+zone.attr("data-title")+"</strong>"+zone.attr("data-description");
-						},
-						delay: 0.7,
-						margin: "15px",
-						height: "90px",
-						width: "240px"
-					}
-				});
-			}
-
-			var mapData = [
-				/* events */
-				/* locations */
-				/* greens */
-				{
-					"title":"Blue Orchid Social Club",
-					"description":"Very high end establishment",
-					"tags":["greens", "business", "inn", "zero", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1137,387,1120,395,1137,425,1155,419]
-					}
-				},
-				{
-					"title":"Tanessen Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[825,135,850,196,942,165,929,148,852,122]
-					}
-				},
-				{
-					"title":"Records Hall",
-					"description":"Holds records for Kintargan nobility",
-					"tags":["greens", "business", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[931,246,900,250,904,271,922,280,935,262]
-					}
-				},
-				{
-					"title":"Whitegate Market",
-					"description":"Market specialising in artwork, jewerly and silver",
-					"tags":["greens", "market", "dolores", "zero", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[976,298,1007,335,959,347,966,317]
-					}
-				},
-				{
-					"title":"Greengate",
-					"description":"Gate sometimes used by nobility, but usually closed",
-					"tags":["greens", "gate", "zero", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1149,327,1172,367,1150,380,1128,337]
-					}
-				},
-				{
-					"title":"Counting House",
-					"description":"",
-					"tags":["greens", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1100,382,1076,387,1083,408,1092,410,1103,405,1108,397]
-					}
-				},
-				{
-					"title":"Lantana Park",
-					"description":"Beautiful manicured park for nobility",
-					"tags":["greens", "park", "zero", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1009,337,955,351,959,382,963,407,981,439,1019,476,1047,487,1086,489,1113,484,1124,480,1110,442,1088,433,1054,430,1048,404,1052,390]
-					}
-				},
-				{
-					"title":"Delronge Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[898,279,890,294,897,340,946,342,962,300]
-					}
-				},
-				{
-					"title":"Victocora Estate",
-					"description":"Burned down",
-					"tags":["greens", "private", "dolores", "zero", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[990,206,940,230,913,191,932,184,928,172,944,164]
-					}
-				},
-				{
-					"title":"Jarvis Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[993,211,941,234,981,286,1034,255]
-					}
-				},
-				{
-					"title":"Aulamaxa Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[979,288,1017,335,1075,289,1034,256]
-					}
-				},
-				{
-					"title":"Vashnarstill Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[898,341,946,347,954,408,899,424]
-					}
-				},
-				{
-					"title":"Jhaltero Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1076,292,1025,334,1062,386,1089,373,1086,363,1124,341]
-					}
-				},
-				{
-					"title":"Aulorian Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[952,414,899,426,922,484,983,511,1000,480]
-					}
-				},
-				{
-					"title":"Sarini Estate",
-					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1065,500,1058,537,1121,544,1175,507,1176,485,1154,470,1126,493]
-					}
-				},
-				/* villegre */
-				{
-					"title":"Alabaster Academy",
-					"description":"Kintargo's largest educational institute",
-					"tags":["villegre", "business", "school", "zero", "dolores", "majet", "fistandantilus", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[652,279,614,328,678,369,707,318]
-					}
-				},
-				{
-					"title":"Nightways Gate",
-					"description":"Mainly used by traffic to/from Nidal",
-					"tags":["villegre", "zero", "dolores", "majet", "fistandantilus", "location", "gate"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[697,125,675,157,703,194,738,140]
-					}
-				},
-				{
-					"title":"Long Roads Coffeehouse",
-					"description":"Run by a female halfling called Laria",
-					"tags":["villegre", "zero", "fistandantilus", "location", "business", "inn"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[564,211,569,233,582,234,578,222]
-					}
-				},
-				{
-					"title":"Newt Market",
-					"description":"Eclectic market that often has magic items for sale",
-					"tags":["villegre", "zero", "dolores", "majet", "fistandantilus", "location", "market"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[770,161,731,212,707,194,742,148]
-					}
-				},
-				{
-					"title":"Lady Docur's School For Girls",
-					"description":"Kintargo's largest finishing school for women",
-					"tags":["villegre", "zero", "dolores", "fistandantilus", "location", "business", "school"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[527,218,517,263,489,256,482,234,502,212]
-					}
-				},
-				{
-					"title":"Villegre Park",
-					"description":"Second largest park in Kintargo",
-					"tags":["villegre", "zero", "dolores", "majet", "fistandantilus", "location", "park"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[534,194,516,286,577,309,575,259,562,213]
-					}
-				},
-				/* yolubilis */
-				{
-					"title":"Bleakbridge",
-					"description":"The main connection between north and south",
-					"tags":["yolubilis", "zero", "dolores", "majet", "fistandantilus", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[999,668,1040,750,1051,743,1013,662]
-					}
-				},
-				{
-					"title":"The War Cage",
-					"description":"Largest weapons shop in the city",
-					"tags":["yolubilis", "business", "shop", "majet", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[686,462,667,500,702,522,725,486]
-					}
-				},
-				{
-					"title":"Sunset Imports",
-					"description":"",
-					"tags":["yolubilis", "business", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[626,520,603,556,648,598,678,551]
-					}
-				},
-				{
-					"title":"Vashnarstill Shipyard",
-					"description":"",
-					"tags":["yolubilis", "zero", "dolores", "business", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[851,496,833,527,822,519,796,548,773,527,795,496,788,487,806,464]
-					}
-				},
-				{
-					"title":"The Thrashing Badger",
-					"description":"Rowdy tavern, recently burned down",
-					"tags":["yolubilis", "zero", "business", "inn", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[845,606,830,631,846,641,864,620]
-					}
-				},
-				{
-					"title":"Clenchjaw's",
-					"description":"Friendly tavern that's gained new customers recently",
-					"tags":["yolubilis", "zero", "majet", "business", "inn", "location"],
-					"type":"location",
-					"shape": {
-						"type":"poly",
-						"coordinates":[992,644,997,661,978,667,977,646]
-					}
-				},
-				/* districts */
-				{
-					"title":"Villegre",
-					"description":"Scholastic district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[376,340,503,319,594,354,617,362,634,387,673,421,686,401,753,408,796,430,819,386,815,368,808,351,787,312,779,266,843,256,799,139,747,145,705,194,600,182,513,143,425,179,381,221,389,314]
-					}
-				},
-				{
-					"title":"The Greens",
-					"description":"Noble district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[809,128,850,230,868,274,880,345,883,425,909,487,1024,542,1127,554,1183,504,1190,437,1162,373,1136,335,939,140,841,100]
-					}
-				},
-				{
-					"title":"Yolubilis Harbour",
-					"description":"Harbour district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[586,362,581,413,557,457,578,507,574,541,860,699,848,734,859,737,886,700,997,666,1041,654,1096,650,1126,678,1161,639,1126,573,1020,554,911,498,875,431,872,347,859,273,844,252,781,262,793,316,811,349,821,379,811,415,797,432,752,410,701,408,686,402,672,425,628,387,613,363]
-					}
-				},
-				{
-					"title":"The Devil's Nursery",
-					"description":"Tiefling slums",
-					"tags":["redroof", "zero", "dolores", "majet", "fistandantilus"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[675,1289,680,1259,691,1226,695,1175,796,1135,925,1115,975,1115,1051,1137,1111,1212,1120,1275,1079,1263,1032,1193,961,1170,815,1165,747,1197,724,1273,686,1311]
-					}
-				},
-				{
-					"title":"Redroof",
-					"description":"Redroof district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[1051,742,1096,776,1121,842,1126,956,1156,993,1160,1093,1164,1127,1168,1183,1148,1287,1077,1266,1035,1190,958,1165,814,1162,743,1195,726,1275,685,1311,656,1286,688,1227,696,1174,691,1118,748,1104,857,1094,852,1083,886,1062,908,1005,885,898,875,848,961,819,991,786,1024,770]
-					}
-				},
-				{
-					"title":"Temple Hill",
-					"description":"Religious district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[673,777,628,827,627,843,692,1113,762,1101,857,1093,855,1080,885,1058,909,1012,873,845,740,811,703,784]
-					}
-				},
-				{
-					"title":"Jarvis End",
-					"description":"Entertainment district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[504,729,533,809,482,814,416,832,363,865,343,912,366,947,390,973,466,1024,490,1013,549,1148,691,1114,623,838,628,818,669,776,584,758,560,726]
-					}
-				},
-				{
-					"title":"Castle District",
-					"description":"Governmental district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[387,500,351,523,269,566,265,638,252,685,287,739,274,905,293,908,390,843,453,818,529,803,501,732,435,681,428,605,443,544,411,512]
-					}
-				},
-				{
-					"title":"Old Kintargo",
-					"description":"Oldest district",
-					"tags":["zero", "dolores", "majet", "fistandantilus", "district"],
-					"type":"district",
-					"shape": {
-						"type":"poly",
-						"coordinates":[691,1116,548,1148,488,1018,464,1024,380,966,344,916,353,881,367,857,387,844,296,903,274,908,258,934,207,956,185,998,183,1055,180,1100,208,1144,216,1185,306,1199,349,1206,419,1278,609,1293,651,1284,686,1226,692,1179]
-					}
-				}
-
-			];
-
-			var currentTags = getCurrentTags();
-
-			initMap(currentTags);
-			applyFilters();
-
-			function applyFilters() {
-				var tags = getCurrentTags();
-
-				$('#kintargoMap').clearMap();
-				for(var i = 0; i < mapData.length; i++) {
-					var mapItem = mapData[i];
-					if(isVisible(tags, mapItem.tags)) {
-						$('#kintargoMap').showZone($('#mapArea' + i)[0], mapItem.type == 'district');
-					}
-				}
-			}
-		</script>
-	</body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
 </html>
