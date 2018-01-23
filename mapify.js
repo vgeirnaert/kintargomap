@@ -357,7 +357,7 @@
                             // Trigger re-render of the popOver when the user stop scrolling
                             _this._renderPopOver(hlZone);
 
-                            var _tmp = _this._computePopOverCompensation(hlZone),
+                            var _tmp = _this._computePopOverCompensation(hlZone, false),
                                 arrowCompensation = _tmp[1],
                                 corners = _tmp[2];
 
@@ -507,7 +507,7 @@
             marginLeft: -(popOverWidth / 2)
         });
 
-        var _tmp = this._computePopOverCompensation(zone),
+        var _tmp = this._computePopOverCompensation(zone, false),
             compensation = _tmp[0],
             arrowCompensation = _tmp[1],
             corners = _tmp[2];
@@ -575,13 +575,15 @@
         }, 100);
     };
 
-    Mapify.prototype._renderLabel = function(zone) {
-        var _tmp = this._computePopOverCompensation(zone),
+    Mapify.prototype._renderLabel = function(zone, isDistrict) {
+        var _tmp = this._computePopOverCompensation(zone, isDistrict),
             compensation = _tmp[0],
             arrowCompensation = _tmp[1],
             corners = _tmp[2];
 
-        var labelElement = $('<div class="maplabel">' + $(zone).attr('data-title') + '</div>');
+        var labelElement = $('<div class="maplabel ' + $(zone).attr('data-hover-class') + '">' + $(zone).attr('data-title') + '</div>');
+
+        var zindex = isDistrict ? 0 : 1;
 
         var color = '#000077';
         if($(zone).attr('data-hover-class') == 'district') {
@@ -592,12 +594,13 @@
         labelElement.css({
             top: corners[1],
             left: corners[0],
-            color: color
+            color: color,
+            'z-index': zindex
         });
         $(zone).append(labelElement);
     };
 
-    Mapify.prototype._computePopOverCompensation = function (zone) {
+    Mapify.prototype._computePopOverCompensation = function (zone, isForLabel) {
         var compensation = 0,
             positionLeft = 0,
             $popOver = this.popOver,
@@ -605,6 +608,10 @@
             corners = cornersArray['center top'],
             popOverWidth = $popOver.outerWidth(),
             borderOffset = this.options.popOver.margin;
+
+        if(isForLabel) {
+            corners = cornersArray['center'];
+        }
 
         if (this._mapHolder.width() < this.scrollParent.width()) { // if the map is smaller than the viewport
             positionLeft = (corners[0] - (popOverWidth / 2)) - this.scrollParent.scrollLeft();
@@ -674,7 +681,8 @@
 
         return {
             'center top': {0: centerX, 1: minY},
-            'center bottom': {0: centerX, 1: maxY}
+            'center bottom': {0: centerX, 1: maxY},
+            'center': {0: centerX, 1:centerY}
         };
     };
 
@@ -742,9 +750,9 @@
         });
     };
 
-    $.fn.showZone = function (zone) {
+    $.fn.showZone = function (zone, isDistrict) {
         mapifyObject._drawHighlight(zone);
-        mapifyObject._renderLabel(zone);
+        mapifyObject._renderLabel(zone, isDistrict);
     };
 
     $.fn.clearMap = function () {
