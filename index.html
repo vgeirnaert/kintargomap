@@ -15,6 +15,12 @@
 				stroke-width: 2;
 			}
 
+			.mapify-hover.event{
+				fill:rgba(128,0,0,0.25);
+				stroke: rgba(128,0,0,0.85);
+				stroke-width: 2;
+			}
+
 			.mapify-popOver strong{
 				font-weight: 400;
 				font-size:18px;
@@ -27,6 +33,19 @@
 				color: #666;
 				font-size: 14px;
 				height: 90px;
+			}
+			.mapLabel{
+				font-weight: 600;
+				height: 20px;
+				position: absolute;
+            	font-size: 16;
+            	opacity: 1;
+            	transition: none;
+            	background: rgba(255,255,255,0.85);
+            	stroke: rgba(0,0,0,0.5);
+				stroke-width: 2;
+				padding: 5px;
+				transform: translate(-50%, -30px);
 			}
 			.mapify-popOver-content{
 				position: relative;
@@ -167,6 +186,18 @@
 			var currentTags = getCurrentTags();
 
 			initMap(currentTags);
+
+			function applyFilters() {
+				var tags = getCurrentTags();
+
+				$('#kintargoMap').clearMap();
+				for(var i = 0; i < mapData.length; i++) {
+					var mapItem = mapData[i];
+					if(isVisible(tags, mapItem.tags)) {
+						$('#kintargoMap').showZone($('#mapArea' + i)[0]);
+					}
+				}
+			}
 		</script>
 	</body>
 </html>

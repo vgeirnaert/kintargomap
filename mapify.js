@@ -575,6 +575,28 @@
         }, 100);
     };
 
+    Mapify.prototype._renderLabel = function(zone) {
+        var _tmp = this._computePopOverCompensation(zone),
+            compensation = _tmp[0],
+            arrowCompensation = _tmp[1],
+            corners = _tmp[2];
+
+        var labelElement = $('<div class="maplabel">' + $(zone).attr('data-title') + '</div>');
+
+        var color = '#000077';
+        if($(zone).attr('data-hover-class') == 'district') {
+            color = '#007700';
+        } else if($(zone).attr('data-hover-class') == 'event') {
+            color = '#770000';
+        }
+        labelElement.css({
+            top: corners[1],
+            left: corners[0],
+            color: color
+        });
+        $(zone).append(labelElement);
+    };
+
     Mapify.prototype._computePopOverCompensation = function (zone) {
         var compensation = 0,
             positionLeft = 0,
@@ -658,6 +680,9 @@
 
     Mapify.prototype._clearMap = function () {
         var _this = this;
+
+        $(".mapLabel").remove();
+
         if (this.isPopOverEnabled) {
             var shouldHide = true,
                 visibleClass = 'mapify-visible';
@@ -719,7 +744,7 @@
 
     $.fn.showZone = function (zone) {
         mapifyObject._drawHighlight(zone);
-        mapifyObject._renderPopOver(zone);
+        mapifyObject._renderLabel(zone);
     };
 
     $.fn.clearMap = function () {
