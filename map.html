@@ -1,6 +1,10 @@
 <html>
 	<head>
+	    <!-- Required meta tags -->
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Kintargo</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="https://rawgit.com/etienne-martin/Mapify/master/build/jquery.mapify.css">	
 		<style type="text/css">
 			.mapify-hover{
@@ -57,14 +61,26 @@
 				transform: translateY(-50%);
 				-webkit-transform: translateY(-50%);
 			}
+			.col {
+				padding:10px;
+			}
 		</style>
 	</head>
 	<body>
-		<div> 
-			<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" />
-		</div>
-		<div id="mapContainer">
-			<map name="kintargoMap" id="kintargoMap"></map>
+		<div class="container-fluid">
+  			<div class="row">
+				<div class="col"> 
+					<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" />
+					<div id="mapContainer">
+						<map name="kintargoMap" id="kintargoMap"></map>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					
+				</div>
+			</div>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
