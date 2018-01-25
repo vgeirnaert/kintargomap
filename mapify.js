@@ -352,7 +352,7 @@
 
                     clearTimeout($.data(this, 'scrollTimer'));
                     $.data(this, 'scrollTimer', setTimeout(function () {
-                        var hlZone = _this.zones[_this.svgMap.find('polygon.mapify-hover').index()];
+                        /*var hlZone = _this.zones[_this.svgMap.find('polygon.mapify-hover').index()];
                         if (hlZone) {
                             // Trigger re-render of the popOver when the user stop scrolling
                             _this._renderPopOver(hlZone);
@@ -372,7 +372,7 @@
                                     transition: _this._popOverArrowTransition
                                 });
                             }
-                        }
+                        }*/
                     }, 100));
                 }
             });
@@ -583,7 +583,7 @@
 
         var labelElement = $('<div class="maplabel ' + $(zone).attr('data-hover-class') + '">' + $(zone).attr('data-title') + '</div>');
 
-        var zindex = isDistrict ? 0 : 1;
+        var zindex = isDistrict ? -1 : 0;
 
         var color = '#000077';
         if($(zone).attr('data-hover-class') == 'district') {
@@ -689,7 +689,9 @@
     Mapify.prototype._clearMap = function () {
         var _this = this;
 
-        $(".mapLabel").remove();
+        if(this.autoClearMap) {
+            $(".mapLabel").remove();
+        }
 
         if (this.isPopOverEnabled) {
             var shouldHide = true,
@@ -714,6 +716,7 @@
         if (this.options.onMapClear) {
             this.options.onMapClear(this);
         }
+        
     };
 
     function Mapify(element, options) {
@@ -723,6 +726,7 @@
         this.options = options;
 
         this.isPopOverEnabled = (this.options.popOver != false);
+        this.autoClearMap = true;
         this.isCustomPopOver = (this.options.popOver.customPopOver != false)
             && (this.options.popOver.customPopOver != undefined);
 
@@ -757,6 +761,10 @@
 
     $.fn.clearMap = function () {
         mapifyObject._clearMap();
+    };
+
+    $.fn.setAutoClearMap = function (clearMap) {
+        mapifyObject.autoClearMap = clearMap;
     };
 
 
