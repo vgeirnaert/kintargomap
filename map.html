@@ -32,6 +32,7 @@
 				display: block;
 				margin-bottom: 10px;
 				color: #000;
+				z-index:2 !important;
 			}
 			.mapify-popOver{
 				color: #666;
@@ -78,7 +79,54 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					
+					<h2>Filters</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<form>
+						<label><input type="checkbox" name="persistentLabels" checked="true" id="persistentLabels">Persistent Labels</label>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3>Show type</h3>
+					<form>
+						<label><input type="radio" name="show" value="" checked="true">All</label>
+						<label><input type="radio" name="show" value="district">Districts</label>
+						<label><input type="radio" name="show" value="location">Locations</label>
+						<label><input type="radio" name="show" value="event">Events</label>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3>Show location</h3>
+					<form>
+						<label><input type="radio" name="type" value="" checked="true">All</label>		
+						<label><input type="radio" name="type" value="shop">Shop</label>
+						<label><input type="radio" name="type" value="inn">Inn</label>
+						<label><input type="radio" name="type" value="gate">Gate</label>
+						<label><input type="radio" name="type" value="private">Residence</label>
+						<label><input type="radio" name="type" value="market">Market</label>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h3>Show district</h3>
+					<form>
+						<label><input type="radio" name="district" value="" checked="true">All</label>
+						<label><input type="radio" name="district" value="greens">The Greens</label>
+						<label><input type="radio" name="district" value="villegre">Villegre</label>
+						<label><input type="radio" name="district" value="yolubilis">Yolubilis Harbour</label>
+						<label><input type="radio" name="district" value="redroof">Redroof</label>
+						<label><input type="radio" name="district" value="temple">Temple Hill</label>
+						<label><input type="radio" name="district" value="jarvis">Jarvis End</label>
+						<label><input type="radio" name="district" value="old">Old Kintargo</label>
+						<label><input type="radio" name="district" value="castle">Castle District</label>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -86,7 +134,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="mapify.js"></script>
 		<script type="text/javascript">
-			function getCurrentTags() {
+			function getUrlParameters() {
 				var url = window.location.href;
 				var urlParts = url.split('?');
 
@@ -105,7 +153,23 @@
 						continue;
 					}
 
-					result.push(parameters[i].split('=')[1]);
+					var parameter = parameters[i].split('=');
+
+					if(parameter[1].length > 0) {
+						result[parameter[0]] = parameter[1];
+					}
+				}
+
+				return result;
+			}
+
+			function getCurrentTags() {
+				var parameters = getUrlParameters();
+
+				var result = [];
+				var keys = Object.keys(parameters);
+				for(var i = 0; i < keys.length; i++) {
+					result.push(parameters[keys[i]]);
 				}
 
 				return result;
@@ -115,6 +179,7 @@
 				console.log("initialising map with filters: " + currentTags);
 				initMapData(currentTags);
 				initMapify();
+				initControls();
 			}
 
 			function initMapData(currentTags) {
@@ -161,6 +226,43 @@
 						width: "240px"
 					}
 				});
+			}
+
+			function initControls() {
+				$("input[type=radio]").change(function() {
+					var value = $(this).val();
+					var parameter = $(this).attr("name");
+
+					var parameters = getUrlParameters();
+					parameters[parameter] = value;
+
+					filterPage(parameters);
+				});
+
+				$("#persistentLabels").change(function() {
+					$('#kintargoMap').setAutoClearMap(!$(this).is(':checked'));
+					applyFilters();
+				});
+			}
+
+			function filterPage(parameters) {
+				var url = createUrl(parameters);
+				window.history.pushState(url, "kintargo", url);
+				applyFilters();
+			}
+
+			function createUrl(parameters) {
+				var url = window.location.href.split('?')[0];
+
+				url = url + '?';
+				var keys = Object.keys(parameters);
+				for(var i = 0; i < keys.length; i++) {
+					var param = keys[i];
+					var value = parameters[param];
+					url = url + param + '=' + value + '&';
+				}
+
+				return url;
 			}
 
 			/* coordinates from https://www.image-map.net/ */
@@ -928,17 +1030,24 @@
 
 			initMap(currentTags);
 			applyFilters();
+			$('#kintargoMap').setAutoClearMap(false);
 
 			function applyFilters() {
 				var tags = getCurrentTags();
 
-				$('#kintargoMap').clearMap();
+				forceClearMap();
 				for(var i = 0; i < mapData.length; i++) {
 					var mapItem = mapData[i];
 					if(isVisible(tags, mapItem.tags)) {
 						$('#kintargoMap').showZone($('#mapArea' + i)[0], mapItem.type == 'district');
 					}
 				}
+			}
+
+			function forceClearMap() {
+				$('#kintargoMap').setAutoClearMap(true);
+				$('#kintargoMap').clearMap();
+				$('#kintargoMap').setAutoClearMap(!$("#persistentLabels").is(':checked'));
 			}
 		</script>
 	</body>
