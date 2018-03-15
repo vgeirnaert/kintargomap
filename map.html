@@ -7,7 +7,7 @@
 		<title>Kintargo</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="https://rawgit.com/etienne-martin/Mapify/master/build/jquery.mapify.css">	
-		<style type="text/css">
+		<style>
 			area {
 			    display: inline;	
 			}
@@ -80,7 +80,7 @@
 		<div class="container-fluid">
   			<div class="row">
 				<div class="col"> 
-					<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" />
+					<img src="map.jpg" id="kintargoMapImage" usemap="#kintargoMap" width="1242" height="1487" alt="imagemap" />
 					<div id="mapContainer">
 						<map name="kintargoMap" id="kintargoMap"></map>
 					</div>
@@ -94,7 +94,7 @@
 			<div class="row">
 				<div class="col">
 					<form>
-						<label><input type="checkbox" name="persistentLabels" checked="true" id="persistentLabels">Persistent Labels</label>
+						<label><input type="checkbox" name="persistentLabels" checked id="persistentLabels">Persistent Labels</label>
 					</form>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 				<div class="col">
 					<h3>Show type</h3>
 					<form>
-						<label><input type="radio" name="show" value="" checked="true">All</label>
+						<label><input type="radio" name="show" value="" checked>All</label>
 						<label><input type="radio" name="show" value="district">Districts</label>
 						<label><input type="radio" name="show" value="location">Locations</label>
 						<label><input type="radio" name="show" value="event">Events</label>
@@ -113,7 +113,7 @@
 				<div class="col">
 					<h3>Show location</h3>
 					<form>
-						<label><input type="radio" name="type" value="" checked="true">All</label>		
+						<label><input type="radio" name="type" value="" checked>All</label>		
 						<label><input type="radio" name="type" value="shop">Shop</label>
 						<label><input type="radio" name="type" value="inn">Inn</label>
 						<label><input type="radio" name="type" value="gate">Gate</label>
@@ -126,7 +126,7 @@
 				<div class="col">
 					<h3>Show district</h3>
 					<form>
-						<label><input type="radio" name="district" value="" checked="true">All</label>
+						<label><input type="radio" name="district" value="" checked>All</label>
 						<label><input type="radio" name="district" value="greens">The Greens</label>
 						<label><input type="radio" name="district" value="villegre">Villegre</label>
 						<label><input type="radio" name="district" value="yolubilis">Yolubilis Harbour</label>
@@ -141,8 +141,8 @@
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="mapify.js"></script>
-		<script type="text/javascript">
+		<script src="mapify.js"></script>
+		<script>
 			function getUrlParameters() {
 				var url = window.location.href;
 				var urlParts = url.split('?');

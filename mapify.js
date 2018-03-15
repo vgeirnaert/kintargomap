@@ -597,7 +597,7 @@
             color: color,
             'z-index': zindex
         });
-        $(zone).append(labelElement);
+        $(".mapify-holder").append(labelElement);
     };
 
     Mapify.prototype._computePopOverCompensation = function (zone, isForLabel) {
@@ -690,7 +690,7 @@
         var _this = this;
 
         if(this.autoClearMap) {
-            $(".mapLabel").remove();
+            $(".maplabel").remove();
         }
 
         if (this.isPopOverEnabled) {
