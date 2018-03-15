@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 	    <!-- Required meta tags -->
@@ -7,22 +8,30 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="https://rawgit.com/etienne-martin/Mapify/master/build/jquery.mapify.css">	
 		<style type="text/css">
+			area {
+			    display: inline;	
+			}
+
+			map {
+				display: inline;
+			}
+
 			.mapify-hover{
 				fill:rgba(0,0,128,0.25);
 				stroke: rgba(0,0,128,0.85);
-				stroke-width: 2;
+				stroke-width: 2px;
 			}
 
 			.mapify-hover.district{
 				fill:rgba(0,128,0,0.25);
 				stroke: rgba(0,128,0,0.85);
-				stroke-width: 2;
+				stroke-width: 2px;
 			}
 
 			.mapify-hover.event{
 				fill:rgba(128,0,0,0.25);
 				stroke: rgba(128,0,0,0.85);
-				stroke-width: 2;
+				stroke-width: 2px;
 			}
 
 			.mapify-popOver strong{
@@ -39,21 +48,21 @@
 				font-size: 14px;
 				height: 90px;
 			}
-			.mapLabel {
+			.maplabel {
 				display: table;
 				font-weight: 600;
 				height: 20px;
 				position: absolute;
-            	font-size: 16;
+            	font-size: 16px;
             	opacity: 1;
             	transition: none;
             	background: rgba(255,255,255,0.85);
             	stroke: rgba(0,0,0,0.5);
-				stroke-width: 2;
+				stroke-width: 2px;
 				padding: 5px;
 				transform: translate(-50%, -30px);
 			}
-			.mapLabel.district {
+			.maplabel.district {
 				transform: translate(-50%, +50%);
 			}
 			.mapify-popOver-content{
@@ -314,7 +323,7 @@
 				{
 					"title":"Greengate",
 					"description":"Gate sometimes used by nobility, but usually closed",
-					"tags":["greens", "gate", "zero", "dolores", "location"],
+					"tags":["greens", "gate", "zero", "dolores", "ialon", "majet", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -344,7 +353,7 @@
 				{
 					"title":"Lantana Park",
 					"description":"Beautiful manicured park for nobility",
-					"tags":["greens", "park", "zero", "dolores", "location"],
+					"tags":["greens", "park", "zero", "dolores", "majet", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -364,7 +373,7 @@
 				{
 					"title":"Victocora Estate",
 					"description":"", /*"Burned down"*/
-					"tags":["greens", "private", "dolores", "zero", "location"],
+					"tags":["greens", "private", "dolores", "zero","majet", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -475,7 +484,7 @@
 				{
 					"title":"The Three Dragons Of Kintargo",
 					"description":"Popular with students and faculty",
-					"tags":["villegre", "zero", "ialon", "location", "business", "inn"],
+					"tags":["villegre", "zero", "ialon","majet", "location", "business", "inn"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -516,7 +525,7 @@
 				{
 					"title":"The Halfway Pint",
 					"description":"Tavern on the Bleakbridge",
-					"tags":["yolubilis", "zero", "dolores", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -576,7 +585,7 @@
 				{
 					"title":"The Thrashing Badger",
 					"description":"Rowdy tavern", /*Rowdy tavern, recently burned down*/
-					"tags":["yolubilis", "zero", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "majet", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -737,8 +746,8 @@
 				},
 				{
 					"title":"Silver Star",
-					"description":"Music store, center of Sarenrae worship", /*Burned down music store and former center of Sarenrae worship*/
-					"tags":["jarvis", "zero", "dolores", "business", "shop", "location"],
+					"description":"Burned down music store and former center of Sarenrae worship", 
+					"tags":["jarvis", "zero", "dolores", "majet", "business", "shop", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -883,7 +892,7 @@
 				{
 					"title":"Onions and Flagons",
 					"description":"Community tavern and good food",
-					"tags":["yolubilis", "zero", "dolores", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -893,7 +902,7 @@
 				{
 					"title":"The Crow Bar",
 					"description":"Tiefling friendly bar",
-					"tags":["yolubilis", "zero", "dolores", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1083,7 +1092,7 @@
 				},
 				{
 					"title":"House of Truth and Clarity",
-					"description":"",/*"Abandoned courthouse, occasional site of public punishments"*/
+					"description":"Abandoned courthouse, occasional site of public punishments",
 					"tags":["old", "zero", "dolores", "location", "majet"],
 					"type":"location",
 					"shape": [{
