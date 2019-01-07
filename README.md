@@ -74,8 +74,8 @@ To create a new tag you can use any name for it, it will be automatically picked
 Example:
 ```html
 <form>
-						<label><input type="radio" name="newfilter" value="" checked>Dont filter this</label>
-						<label><input type="radio" name="newfilter" value="option1">Option 1</label>
-						<label><input type="radio" name="newfilter" value="option2">Option 2</label>
+	<label><input type="radio" name="newfilter" value="" checked>Dont filter this</label>
+	<label><input type="radio" name="newfilter" value="option1">Option 1</label>
+	<label><input type="radio" name="newfilter" value="option2">Option 2</label>
 </form>
 ```
