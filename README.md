@@ -65,3 +65,17 @@ You can use the website image-map.net to obtain the coordinates for your shapes.
 
 Using the image-map website, you can draw poly shapes on your map by selecting 'Poly' as shape for your active area and then clicking on your map. You can add multiple areas. To get the coordinates, click 'Show me the code!'. The resulting HTML is mostly unnecessary, but in it you can see for each area a set of coordinates. You can copy and paste those into your javascript mapData coordinates array.
 
+### Creating your own filters
+
+If you wish to create your own filters at the bottom of the page, or change the existing ones, you can find them in the html of the map.html file as html form inputs. Make sure that the radio values are the same as the tags you're entering in your map data. Keep in mind that only map objects that contain all the tags currently selected by a user will be shown.
+
+To create a new tag you can use any name for it, it will be automatically picked up by the script.
+
+Example:
+```html
+<form>
+						<label><input type="radio" name="newfilter" value="" checked>Dont filter this</label>
+						<label><input type="radio" name="newfilter" value="option1">Option 1</label>
+						<label><input type="radio" name="newfilter" value="option2">Option 2</label>
+</form>
+```
