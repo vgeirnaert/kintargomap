@@ -143,139 +143,36 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="mapify.js"></script>
+		<script src="map.js"></script>
 		<script>
-			function getUrlParameters() {
-				var url = window.location.href;
-				var urlParts = url.split('?');
-
-				if(urlParts.length == 1) {
-					return [];
-				}
-
-				var queryString = urlParts[1];
-
-				var parameters = queryString.split('&');
-
-
-				var result = [];
-				for(var i = 0; i < parameters.length; i++) {
-					if(parameters[i].indexOf('=') == -1) {
-						continue;
-					}
-
-					var parameter = parameters[i].split('=');
-
-					if(parameter[1].length > 0) {
-						result[parameter[0]] = parameter[1];
-					}
-				}
-
-				return result;
-			}
-
-			function getCurrentTags() {
-				var parameters = getUrlParameters();
-
-				var result = [];
-				var keys = Object.keys(parameters);
-				for(var i = 0; i < keys.length; i++) {
-					result.push(parameters[keys[i]]);
-				}
-
-				return result;
-			}
-
-			function initMap(currentTags) {
-				console.log("initialising map with filters: " + currentTags);
-				initMapData(currentTags);
-				initMapify();
-				initControls();
-			}
-
-			function initMapData(currentTags) {
-				var map = $('#kintargoMap');
-				map.empty();
-
-				for(var i = 0; i < mapData.length; i++) {
-					var mapItem = mapData[i];
-					if(isVisible(currentTags, mapItem.tags)) {
-						for(var j = 0; j < mapItem.shape.length; j++) {
-							var mapElement = $('<area data-title="' + mapItem.title + 
-								'" data-description="' + mapItem.description + 
-								'" shape="' + mapItem.shape[j].type + 
-								'" coords="' + mapItem.shape[j].coordinates + 
-								'" data-hover-class="' + mapItem.type +
-								'" data-group-id="' + (mapItem.shape.length > 1 ? 'mapArea'+i : '')+
-								'" id="mapArea' + i + '" />');
-							map.append(mapElement);
-						}
-					}
-				}
-			}
-
-			function isVisible(currentTags, objectTags) {
-				for(var i = 0; i < currentTags.length; i++) {
-					if($.inArray(currentTags[i], objectTags) == -1) {
-						return false;
-					}
-
-				}
-
-				return true;
-			}
-
-			function initMapify() {
-				$("img[usemap]").mapify({
-					popOver: {
-						content: function(zone){ 
-							return "<strong>"+zone.attr("data-title")+"</strong>"+zone.attr("data-description");
-						},
-						delay: 0.7,
-						margin: "15px",
-						height: "90px",
-						width: "240px"
-					}
-				});
-			}
-
-			function initControls() {
-				$("input[type=radio]").change(function() {
-					var value = $(this).val();
-					var parameter = $(this).attr("name");
-
-					var parameters = getUrlParameters();
-					parameters[parameter] = value;
-
-					filterPage(parameters);
-				});
-
-				$("#persistentLabels").change(function() {
-					$('#kintargoMap').setAutoClearMap(!$(this).is(':checked'));
-					applyFilters();
-				});
-			}
-
-			function filterPage(parameters) {
-				var url = createUrl(parameters);
-				window.history.pushState(url, "kintargo", url);
-				applyFilters();
-			}
-
-			function createUrl(parameters) {
-				var url = window.location.href.split('?')[0];
-
-				url = url + '?';
-				var keys = Object.keys(parameters);
-				for(var i = 0; i < keys.length; i++) {
-					var param = keys[i];
-					var value = parameters[param];
-					url = url + param + '=' + value + '&';
-				}
-
-				return url;
-			}
-
 			/* coordinates from https://www.image-map.net/ */
+
+			/* 
+			var mapData should be an array of javascript map objects.
+
+			Each map object has the following properties:
+				title (mandatory): string, label to be displayed on the map
+				description (optional): string, description to displayed on the tooltip
+				tags (mandatory): array of strings - a map object will be displayed if all the currently user-selected tags are in this list
+				type (mandatory): string, one of "event", "location", "district"
+					events will be coloured red, locations blue and districts green
+				shape (mandatory): array of shape objects, must contain at least one shape object
+					shape objects have a type (string, either "triangle" or "poly") and coordinates (array of integers, get coordinates from image-map.net)
+						poly shapes are the image-map poly shape defined by their coordinates, triangles are just a small triangle located around 1 set of x,y coordinates
+
+			Example:
+				{
+					"title":"Alabaster Arcana",
+					"description":"Magic items and supplies",
+					"tags":["villegre", "business", "shop", "ialon", "location", "majet", "dolores", "zero"],
+					"type":"location",
+					"shape": [{
+						"type":"poly",
+						"coordinates":[753,320,755,327,764,327,760,319]
+					}]
+				},
+
+			*/
 
 			var mapData = [
 				/* events */
@@ -1287,31 +1184,7 @@
 					}]
 				}
 
-			];
-
-			var currentTags = getCurrentTags();
-
-			initMap(currentTags);
-			applyFilters();
-			$('#kintargoMap').setAutoClearMap(false);
-
-			function applyFilters() {
-				var tags = getCurrentTags();
-
-				forceClearMap();
-				for(var i = 0; i < mapData.length; i++) {
-					var mapItem = mapData[i];
-					if(isVisible(tags, mapItem.tags)) {
-						$('#kintargoMap').showZone($('#mapArea' + i)[0], mapItem.type == 'district');
-					}
-				}
-			}
-
-			function forceClearMap() {
-				$('#kintargoMap').setAutoClearMap(true);
-				$('#kintargoMap').clearMap();
-				$('#kintargoMap').setAutoClearMap(!$("#persistentLabels").is(':checked'));
-			}
+			];			
 		</script>
 	</body>
 </html>
