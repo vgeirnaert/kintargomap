@@ -2,7 +2,7 @@
 
 Map of the city of Kintargo with toggleable labels and highlighted areas for the Hells Rebels adventure path for Pathfinder. Different labels can be made visible for different players, allowing each player to have their own unique knowledge of the city. This project be used as is (beware: it contains a lot of extra content not from the books, and is currently keyed to specific players), or can (should) be adapted to your own campaign.
 
-This is provided as is, without support.
+This is provided as is, without support. For an example project, see here: http://kintargo.mindsoup.net
 
 ![screenshot](https://i.imgur.com/rdrGzNl.jpg)
 
