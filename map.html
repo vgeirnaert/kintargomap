@@ -32,6 +32,7 @@
 				fill:rgba(128,0,0,0.25);
 				stroke: rgba(128,0,0,0.85);
 				stroke-width: 2px;
+				z-index: 10 !important;
 			}
 
 			.mapify-popOver strong{
@@ -278,12 +279,66 @@
 
 			var mapData = [
 				/* events */
+				{
+					"title":"Tiefling Murders",
+					"description":"Grizzly murders in the devil's nursery",
+					"tags":["redroof", "event", "murder", "zero", "dolores", "ialon", "majet"],
+					"type":"event",
+					"shape": [{
+						"type":"triangle",
+						"coordinates":[996,1137]
+					},
+					{
+						"type":"triangle",
+						"coordinates":[929,1139]
+					}/*,
+					{
+						"type":"triangle",
+						"coordinates":[1029,1162]
+					},
+
+					{
+						"type":"triangle",
+						"coordinates":[991,1168]
+					}*/]
+				},
+				{
+					"title":"Old Kintargo Murders",
+					"description":"Bloody murders in Old Kintargo",
+					"tags":["old", "event", "murder", "zero", "dolores", "ialon", "majet"],
+					"type":"event",
+					"shape": [{
+						"type":"triangle",
+						"coordinates":[379,1218]
+					},
+					{
+						"type":"triangle",
+						"coordinates":[391,1191]
+					},
+					{
+						"type":"triangle",
+						"coordinates":[445,1090]
+					}/*,
+
+					{
+						"type":"triangle",
+						"coordinates":[557,1259]
+					},
+					{
+						"type":"triangle",
+						"coordinates":[654,1199]
+					},
+					{
+						"type":"triangle",
+						"coordinates":[492,1133]
+					}*/]
+				},
 				/* locations */
 				/* greens */
 				{
 					"title":"Blue Orchid Social Club",
 					"description":"Very high end establishment",
-					"tags":["greens", "business", "inn", "zero", "dolores", "ialon", "location"],
+					"tags":["greens", "business", "inn", "zero", "dolores", "ialon", "location", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -373,7 +428,7 @@
 				{
 					"title":"Victocora Estate",
 					"description":"", /*"Burned down"*/
-					"tags":["greens", "private", "dolores", "zero","majet", "location"],
+					"tags":["greens", "private", "dolores", "zero","majet", "ialon", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -423,7 +478,7 @@
 				{
 					"title":"Aulorian Estate",
 					"description":"",
-					"tags":["greens", "private", "dolores", "location"],
+					"tags":["greens", "private", "dolores", "location", "ialon", "majet", "zero"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -454,7 +509,7 @@
 				{
 					"title":"Alabaster Arcana",
 					"description":"Magic items and supplies",
-					"tags":["villegre", "business", "shop", "ialon", "location"],
+					"tags":["villegre", "business", "shop", "ialon", "location", "majet", "dolores", "zero"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -474,7 +529,7 @@
 				{
 					"title":"Long Roads Coffeehouse",
 					"description":"Run by a female halfling called Laria",
-					"tags":["villegre", "zero", "ialon", "location", "business", "inn"],
+					"tags":["villegre", "zero", "ialon", "majet", "dolores", "location", "business", "inn"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -484,7 +539,7 @@
 				{
 					"title":"The Three Dragons Of Kintargo",
 					"description":"Popular with students and faculty",
-					"tags":["villegre", "zero", "ialon","majet", "location", "business", "inn"],
+					"tags":["villegre", "zero", "ialon","majet", "location", "business", "inn", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -504,11 +559,21 @@
 				{
 					"title":"Lady Docur's School For Girls",
 					"description":"Kintargo's largest finishing school for women",
-					"tags":["villegre", "zero", "dolores", "ialon", "location", "business", "school"],
+					"tags":["villegre", "zero", "dolores", "ialon", "location", "business", "school", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
 						"coordinates":[527,218,517,263,489,256,482,234,502,212]
+					}]
+				},
+				{
+					"title":"Highhelm &amp; Caladras",
+					"description":"Specialist smith and jeweler",
+					"tags":["villegre", "location", "business", "ialon"],
+					"type":"location",
+					"shape": [{
+						"type":"poly",
+						"coordinates":[437,264,443,275,426,290,415,271]
 					}]
 				},
 				{
@@ -525,7 +590,7 @@
 				{
 					"title":"The Halfway Pint",
 					"description":"Tavern on the Bleakbridge",
-					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -545,7 +610,7 @@
 				{
 					"title":"The Naughty Maiden",
 					"description":"Inn, gambling hall and brothel",
-					"tags":["yolubilis", "zero", "ialon", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "ialon", "business", "inn", "location", "dolores", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -555,7 +620,7 @@
 				{
 					"title":"The War Cage",
 					"description":"Largest weapons shop in the city",
-					"tags":["yolubilis", "business", "shop", "majet", "location"],
+					"tags":["yolubilis", "business", "shop", "majet", "zero", "location", "dolores", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -584,8 +649,8 @@
 				},
 				{
 					"title":"The Thrashing Badger",
-					"description":"Rowdy tavern", /*Rowdy tavern, recently burned down*/
-					"tags":["yolubilis", "zero", "majet", "business", "inn", "location"],
+					"description":"Rowdy tavern, burned down during the Night of Ashes", 
+					"tags":["yolubilis", "zero", "majet", "dolores", "ialon", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -594,8 +659,8 @@
 				},
 				{
 					"title":"Clenchjaw's",
-					"description":"Friendly tavern", /*Friendly tavern that's gained new customers recently*/
-					"tags":["yolubilis", "zero", "majet", "business", "inn", "location"],
+					"description":"Friendly tavern that's gained new, rowdy customers recently", 
+					"tags":["yolubilis", "zero", "majet", "business", "inn", "location", "dolores", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -677,7 +742,7 @@
 				{
 					"title":"The Philospher's Scone",
 					"description":"Bakery specialising in cakes and pastries",
-					"tags":["jarvis", "zero", "dolores", "business", "shop", "location"],
+					"tags":["jarvis", "zero", "dolores", "majet", "business", "shop", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -687,7 +752,7 @@
 				{
 					"title":"The Leper's Arms",
 					"description":"Live music every night, with audience participation!",
-					"tags":["jarvis", "zero", "majet", "ialon", "business", "inn", "location"],
+					"tags":["jarvis", "zero", "majet", "ialon", "business", "inn", "location", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -695,9 +760,9 @@
 					}]
 				},
 				{
-					"title":"The Drunken Hero",/*The Drunken Fool*/
-					"description":"",
-					"tags":["jarvis", "zero", "business", "inn", "location"],
+					"title":"The Drunken Fool",
+					"description":"Formerly the Drunken Hero",
+					"tags":["jarvis", "zero", "business", "inn", "location", "ialon", "majet", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -737,7 +802,7 @@
 				{
 					"title":"Veritas Plaza",
 					"description":"Kintargo's original marketplace",
-					"tags":["jarvis", "zero", "majet", "dolores", "market", "location"],
+					"tags":["jarvis", "zero", "majet", "dolores", "ialon", "market", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -747,7 +812,7 @@
 				{
 					"title":"Silver Star",
 					"description":"Burned down music store and former center of Sarenrae worship", 
-					"tags":["jarvis", "zero", "dolores", "majet", "business", "shop", "location"],
+					"tags":["jarvis", "zero", "dolores", "majet", "ialon", "business", "shop", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -805,9 +870,9 @@
 					}]
 				},
 				{
-					"title":"Humbert House",
-					"description":"Abandoned orphanage, reputed to be haunted",
-					"tags":["temple", "dolores", "location"],
+					"title":"Humbright House",
+					"description":"Abandoned orphanage and temple, reputed to be haunted",
+					"tags":["temple", "dolores", "location", "majet", "zero", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -852,7 +917,7 @@
 				{
 					"title":"Dolores' apartment",
 					"description":"",
-					"tags":["redroof", "dolores", "location"],
+					"tags":["redroof", "dolores", "majet", "ialon", "zero", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -862,7 +927,7 @@
 				{
 					"title":"Home Orphanage",
 					"description":"The Home For Young Tieflings",
-					"tags":["redroof", "dolores", "location", "business"],
+					"tags":["redroof", "dolores", "zero", "ialon", "majet", "location", "business"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -872,7 +937,7 @@
 				{
 					"title":"Cubists Society",
 					"description":"The Kintargo Cubists Society",
-					"tags":["redroof", "ialon", "location"],
+					"tags":["redroof", "ialon", "location", "majet", "zero", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -882,7 +947,7 @@
 				{
 					"title":"Hocums Fantasmagorium",
 					"description":"Museum of strange and unusual curiosities (closed)",
-					"tags":["redroof", "zero", "dolores", "location"],
+					"tags":["redroof", "zero", "dolores", "location", "ialon", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -892,7 +957,7 @@
 				{
 					"title":"Onions and Flagons",
 					"description":"Community tavern and good food",
-					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "dolores", "majet", "ialon", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -902,7 +967,7 @@
 				{
 					"title":"The Crow Bar",
 					"description":"Tiefling friendly bar",
-					"tags":["yolubilis", "zero", "dolores", "majet", "business", "inn", "location"],
+					"tags":["redroof", "zero", "dolores", "majet", "ialon", "business", "inn", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -912,7 +977,7 @@
 				{
 					"title":"Kelimber's Dry Goods and Supplies",
 					"description":"General store and post office",
-					"tags":["redroof", "dolores", "location", "business", "shop"],
+					"tags":["redroof", "dolores", "ialon", "majet", "zero", "location", "business", "shop"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -932,7 +997,7 @@
 				{
 					"title":"The Devil's Threads",
 					"description":"Finest tailor in Redroof",
-					"tags":["redroof", "dolores", "location", "business", "shop"],
+					"tags":["redroof", "dolores", "majet", "zero", "ialon", "location", "business", "shop"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -942,7 +1007,7 @@
 				{
 					"title":"Fair Fortune Livery",
 					"description":"Abandoned stable",
-					"tags":["redroof", "dolores", "location"],
+					"tags":["redroof", "dolores", "majet", "ialon", "zero", "location"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -952,7 +1017,7 @@
 				{
 					"title":"Cloven Hoof Society",
 					"description":"Tiefling rights advocacy and support center",
-					"tags":["redroof", "zero", "dolores", "location", "business"],
+					"tags":["redroof", "zero", "dolores", "ialon", "location", "business", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -963,7 +1028,7 @@
 				{
 					"title":"Old Harbour",
 					"description":"",
-					"tags":["old", "zero", "dolores", "location", "majet"],
+					"tags":["old", "zero", "dolores", "majet", "ialon", "location", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -973,7 +1038,7 @@
 				{
 					"title":"Sweet Tooth",
 					"description":"",
-					"tags":["old", "location", "business", "shop"],
+					"tags":["old", "location", "dolores", "business", "shop", "majet", "zero", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -983,7 +1048,7 @@
 				{
 					"title":"The Stumble Inn",
 					"description":"Old sailor's tavern",
-					"tags":["yolubilis", "zero", "business", "inn", "location"],
+					"tags":["yolubilis", "zero", "business", "inn", "location", "dolores", "ialon", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1003,7 +1068,7 @@
 				{
 					"title":"Sallix Salt Works",
 					"description":"",
-					"tags":["old", "zero", "business", "location"],
+					"tags":["old", "zero", "business", "location", "majet", "ialon", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1013,7 +1078,7 @@
 				{
 					"title":"Salt Gate",
 					"description":"",
-					"tags":["old", "zero", "location", "gate"],
+					"tags":["old", "zero", "location", "gate", "ialon", "dolores", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1043,7 +1108,7 @@
 				{
 					"title":"Lucky Bones",
 					"description":"Ruin, former gambling hall",
-					"tags":["old", "zero", "location"],
+					"tags":["old", "zero", "location", "majet", "ialon", "dolores"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1053,7 +1118,7 @@
 				{
 					"title":"Tooth and Nail",
 					"description":"Quiet tavern",
-					"tags":["old", "zero", "dolores", "location", "business", "inn"],
+					"tags":["old", "zero", "dolores", "location", "business", "inn", "ialon", "majet"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1073,7 +1138,7 @@
 				{
 					"title":"Big Dog Brewery",
 					"description":"",
-					"tags":["old", "zero", "location", "shop", "business"],
+					"tags":["old", "zero", "majet", "ialon", "dolores", "location", "shop", "business"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1083,7 +1148,7 @@
 				{
 					"title":"Holding House",
 					"description":"Interim jail",
-					"tags":["old", "zero", "location", "majet"],
+					"tags":["old", "zero", "location", "majet", "dolores", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1103,7 +1168,7 @@
 				{
 					"title":"Iudeimus Tenement",
 					"description":"Tallest building in Old Kintargo",
-					"tags":["old", "zero", "location", "private"],
+					"tags":["old", "zero", "location", "private", "majet", "dolores", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",
@@ -1112,8 +1177,8 @@
 				},
 				{
 					"title":"Vespam Artisans",
-					"description":"",
-					"tags":["old", "zero", "dolores", "location", "business", "shop"],
+					"description":"Metalworking and clockmakers",
+					"tags":["old", "zero", "dolores", "location", "business", "shop", "majet", "ialon"],
 					"type":"location",
 					"shape": [{
 						"type":"poly",

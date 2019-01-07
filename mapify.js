@@ -166,6 +166,20 @@
             case 'poly':
                 // supported, passthru
                 break;
+            case 'triangle':
+                var rectCoords = $(zone).attr("coords").split(','),
+                    fixedCoords = [];
+
+                $.each([{x:0,y:-5}, {x:-5,y:5}, {x:5,y:5}], function(index, value) {
+                    var originalXCoord = parseInt(rectCoords[0]);
+                    var originalYCoord = parseInt(rectCoords[1]);
+                    fixedCoords.push(originalXCoord + value.x);
+                    fixedCoords.push(originalYCoord + value.y);
+                });
+
+                $(zone).attr('coords', fixedCoords.join(','));
+                $(zone).attr('shape', 'poly');
+                break;
             default:
                 console.log('ERROR: Area shape type "' + $(zone).attr('shape') + '" is not supported.');
                 return (false);
